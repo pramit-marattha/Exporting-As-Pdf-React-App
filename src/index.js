@@ -1,17 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { useReactToPrint } from 'react-to-print';
+import { render } from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class Exportpdf extends React.Component {
+  render() {
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    return (
+      <iframe src="https://pramit-corona-visual.netlify.app/" height="500" width="100%" title="Covid-19 Visualization">
+      </iframe>
+    );
+  }
+}
+
+const Example = () => {
+  const componentRef = React.useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  return (
+    <div>
+      <Exportpdf ref={componentRef} />
+      <button onClick={handlePrint}>Export As Pdf</button>
+    </div>
+  );
+};
+
+
+render(<Example />, document.querySelector("#root"));
